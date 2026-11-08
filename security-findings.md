@@ -11,8 +11,8 @@ Machine-readable copy: `security-findings.json`.
 | ID | Location | Unit | Covers |
 |---|---|---|---|
 | U01 | `app/cli.py:16-23` | init (click command `flask translate init LANG`) | C01, C02, C03 |
-| U02 | `app/cli.py:26-33` | update (click command `flask translate update`) | C04, C05, C06, C07 |
-| U03 | `app/cli.py:36-40` | compile (click command `flask translate compile`) | C08, C09 |
+| U02 | `app/cli.py:27-33` | update (click command `flask translate update`) | C04, C05, C06, C07 |
+| U03 | `app/cli.py:37-40` | compile (click command `flask translate compile`) | C08, C09 |
 | U04 | `app/models.py:140-142` | User.avatar | C10 |
 | U05 | `app/translate.py:6-21` | translate | C11, dep:requests, dep:urllib3, dep:idna, dep:certifi |
 | U06 | `app/models.py:181-184` | User.get_reset_password_token | dep:pyjwt |

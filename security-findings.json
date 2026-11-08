@@ -22,7 +22,7 @@
     },
     {
       "id": "U02",
-      "location": "app/cli.py:26-33",
+      "location": "app/cli.py:27-33",
       "unit": "update (click command `flask translate update`)",
       "covers": [
         "C04",
@@ -34,7 +34,7 @@
     },
     {
       "id": "U03",
-      "location": "app/cli.py:36-40",
+      "location": "app/cli.py:37-40",
       "unit": "compile (click command `flask translate compile`)",
       "covers": [
         "C08",
