@@ -36,5 +36,5 @@ def update():
 @translate.command()
 def compile():
     """Compile all languages."""
-    if os.system('pybabel compile -d app/translations'):
+    if os.system('pybabel compile -d app/translations'):  # noqa: S607 - dev-only CLI, fixed command; pybabel is intentionally resolved from the active venv's PATH
         raise RuntimeError('compile command failed')
