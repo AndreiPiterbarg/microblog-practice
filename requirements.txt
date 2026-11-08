@@ -23,7 +23,7 @@ Flask-SQLAlchemy==3.1.1
 Flask-WTF==1.2.1
 greenlet==3.0.1
 gunicorn==21.2.0
-httpie==3.2.2
+httpie==3.2.2  # pip-audit: PYSEC-2023-242 not exploitable - dev-only CLI, never imported or run by the app; 3.2.3 only pins requests (no cert-validation change)
 idna==3.15
 itsdangerous==2.1.2
 Jinja2==3.1.6
