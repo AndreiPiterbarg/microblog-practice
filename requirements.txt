@@ -1,4 +1,4 @@
-aiosmtpd==1.4.4.post2
+aiosmtpd==1.4.4.post2  # pip-audit: PYSEC-2024-221, PYSEC-2026-1111 not exploitable - dev-only local SMTP debug server (Debugging handler, no relay, no STARTTLS); not imported or run by the app
 alembic==1.12.1
 atpublic==4.0
 attrs==23.1.0
