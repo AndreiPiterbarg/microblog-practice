@@ -14,7 +14,7 @@ elasticsearch==8.11.0
 email-validator==2.1.0.post1
 Flask==3.0.0
 flask-babel==4.0.0
-Flask-HTTPAuth==4.8.0
+Flask-HTTPAuth==4.8.1
 Flask-Login==0.6.3
 Flask-Mail==0.9.1
 Flask-Migrate==4.0.5
