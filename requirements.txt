@@ -38,7 +38,7 @@ psycopg2-binary==2.9.9
 Pygments==2.17.1
 PyJWT==2.8.0
 PySocks==1.7.1
-python-dotenv==1.0.0
+python-dotenv==1.0.0  # pip-audit: PYSEC-2026-2270 not exploitable - app only calls load_dotenv (read-only); vulnerable set_key/unset_key are never called
 pytz==2023.3.post1
 redis==5.0.1
 requests==2.31.0
