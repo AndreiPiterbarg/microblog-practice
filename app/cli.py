@@ -15,9 +15,9 @@ def translate():
 @click.argument('lang')
 def init(lang):
     """Initialize a new language."""
-    if os.system('pybabel extract -F babel.cfg -k _l -o messages.pot .'):  # noqa: S607 - dev-only CLI; pybabel is a console script from the user's own venv/PATH, no fixed absolute path
+    if os.system('pybabel extract -F babel.cfg -k _l -o messages.pot .'):  # noqa: S605, S607 - constant command, no user input; dev-only CLI, pybabel is a console script from the user's own venv/PATH
         raise RuntimeError('extract command failed')
-    if os.system(
+    if os.system(  # noqa: S605 - dev-only CLI; LANG is the invoking developer's own argv, no trust boundary
             'pybabel init -i messages.pot -d app/translations -l ' + lang):
         raise RuntimeError('init command failed')
     os.remove('messages.pot')
@@ -26,9 +26,9 @@ def init(lang):
 @translate.command()
 def update():
     """Update all languages."""
-    if os.system('pybabel extract -F babel.cfg -k _l -o messages.pot .'):
+    if os.system('pybabel extract -F babel.cfg -k _l -o messages.pot .'):  # noqa: S605 - constant command string, no user input reaches the shell
         raise RuntimeError('extract command failed')
-    if os.system('pybabel update -i messages.pot -d app/translations'):
+    if os.system('pybabel update -i messages.pot -d app/translations'):  # noqa: S605 - constant command string, no user input
         raise RuntimeError('update command failed')
     os.remove('messages.pot')
 
@@ -36,5 +36,5 @@ def update():
 @translate.command()
 def compile():
     """Compile all languages."""
-    if os.system('pybabel compile -d app/translations'):
+    if os.system('pybabel compile -d app/translations'):  # noqa: S605 - constant command string, no user input reaches the shell
         raise RuntimeError('compile command failed')
