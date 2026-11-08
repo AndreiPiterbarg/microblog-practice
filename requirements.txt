@@ -45,7 +45,7 @@ requests==2.31.0
 requests-toolbelt==1.0.0
 rich==13.7.0
 rq==1.15.1
-setuptools==68.2.2
+setuptools==68.2.2  # pip-audit: PYSEC-2025-49, PYSEC-2026-1918, PYSEC-2026-3447, GHSA-xmj3-9gf7-h52w not exploitable - build tool, not imported by the app; vulnerable paths (PackageIndex/easy_install URL downloads, sdist MANIFEST.in on macOS, Windows wheel-as-egg install) are never run here
 six==1.16.0
 SQLAlchemy==2.0.23
 typing_extensions==4.8.0
