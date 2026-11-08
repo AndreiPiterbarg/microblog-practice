@@ -41,7 +41,9 @@ Application diff vs. the manifest commit: 3 files (`app/cli.py`, `app/models.py`
 
 pip-audit still counts these commented packages, because comments don't suppress it.
 
-## Behaviour changes flagged by sub-sessions (not applied; awaiting decision)
+## Behaviour changes flagged by sub-sessions (not applied: accepted risk)
+
+The owner decided not to apply any of these, so that nothing downstream breaks. They stay open as accepted risks.
 | Finding | Only fix | Behaviour change |
 |---|---|---|
 | C11: S113 `app/translate.py:14` (real) | `timeout=10` on `requests.post` | A stalled translator call errors after 10s instead of hanging. Breaks `tests_golden_u05.test_post_called_without_timeout`. |
@@ -50,5 +52,5 @@ pip-audit still counts these commented packages, because comments don't suppress
 | PyJWT 2.8.0 (optional hardening) | 2.15.0 | `InsecureKeyLengthWarning`, `InvalidKeyError` on an empty `SECRET_KEY`, and changed `TypeError` messages are pinned by u06/u07. |
 
 ## Remaining findings
-- Ruff: 1 (C11).
-- pip-audit: 36 unique. Real and unresolved: gunicorn 2, Werkzeug 7 (3 real/debug, 4 Windows-only). The other 27 are documented false positives (above).
+- Ruff: 1 (C11, accepted risk).
+- pip-audit: 36 unique. Real but accepted risk: gunicorn 2, Werkzeug 7 (3 real/debug, 4 Windows-only). The other 27 are documented false positives (above).
