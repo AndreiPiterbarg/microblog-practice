@@ -138,7 +138,7 @@ class User(PaginatedAPIMixin, UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def avatar(self, size):
-        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()  # noqa: S324 - Gravatar URL id, not a security use
         return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
 
     def follow(self, user):
