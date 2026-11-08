@@ -28,7 +28,7 @@ def update():
     """Update all languages."""
     if os.system('pybabel extract -F babel.cfg -k _l -o messages.pot .'):  # noqa: S605, S607 - constant dev-only command, no user input; pybabel from venv PATH
         raise RuntimeError('extract command failed')
-    if os.system('pybabel update -i messages.pot -d app/translations'):  # noqa: S605 - constant command string, no user input
+    if os.system('pybabel update -i messages.pot -d app/translations'):  # noqa: S605, S607 - constant command string, no user input; pybabel resolved via the venv PATH on purpose
         raise RuntimeError('update command failed')
     os.remove('messages.pot')
 
