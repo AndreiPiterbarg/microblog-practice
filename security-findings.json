@@ -1,0 +1,1371 @@
+{
+  "scans": {
+    "ruff": "uvx ruff check --isolated --select S app config.py microblog.py",
+    "pip_audit": "uvx --python 3.11 pip-audit -r requirements.txt"
+  },
+  "baseline": {
+    "ruff_findings": 11,
+    "pip_audit_reported": "99 known vulnerabilities in 17 packages (raw, includes duplicate entries)",
+    "pip_audit_unique_advisories": 58
+  },
+  "code_units": [
+    {
+      "id": "U01",
+      "location": "app/cli.py:16-23",
+      "unit": "init (click command `flask translate init LANG`)",
+      "covers": [
+        "C01",
+        "C02",
+        "C03"
+      ],
+      "kind": "code"
+    },
+    {
+      "id": "U02",
+      "location": "app/cli.py:26-33",
+      "unit": "update (click command `flask translate update`)",
+      "covers": [
+        "C04",
+        "C05",
+        "C06",
+        "C07"
+      ],
+      "kind": "code"
+    },
+    {
+      "id": "U03",
+      "location": "app/cli.py:36-40",
+      "unit": "compile (click command `flask translate compile`)",
+      "covers": [
+        "C08",
+        "C09"
+      ],
+      "kind": "code"
+    },
+    {
+      "id": "U04",
+      "location": "app/models.py:140-142",
+      "unit": "User.avatar",
+      "covers": [
+        "C10"
+      ],
+      "kind": "code"
+    },
+    {
+      "id": "U05",
+      "location": "app/translate.py:6-21",
+      "unit": "translate",
+      "covers": [
+        "C11",
+        "dep:requests",
+        "dep:urllib3",
+        "dep:idna",
+        "dep:certifi"
+      ],
+      "kind": "code+dep"
+    },
+    {
+      "id": "U06",
+      "location": "app/models.py:181-184",
+      "unit": "User.get_reset_password_token",
+      "covers": [
+        "dep:pyjwt"
+      ],
+      "kind": "dep"
+    },
+    {
+      "id": "U07",
+      "location": "app/models.py:186-193",
+      "unit": "User.verify_reset_password_token (staticmethod)",
+      "covers": [
+        "dep:pyjwt"
+      ],
+      "kind": "dep"
+    },
+    {
+      "id": "U08",
+      "location": "app/models.py:134-135",
+      "unit": "User.set_password",
+      "covers": [
+        "dep:werkzeug"
+      ],
+      "kind": "dep"
+    },
+    {
+      "id": "U09",
+      "location": "app/models.py:137-138",
+      "unit": "User.check_password",
+      "covers": [
+        "dep:werkzeug"
+      ],
+      "kind": "dep"
+    },
+    {
+      "id": "U10",
+      "location": "app/api/auth.py:7,11-20",
+      "unit": "basic_auth (HTTPBasicAuth instance + verify_password + basic_auth_error), exercised via POST /api/tokens",
+      "covers": [
+        "dep:flask-httpauth",
+        "dep:werkzeug"
+      ],
+      "kind": "dep"
+    },
+    {
+      "id": "U11",
+      "location": "app/api/auth.py:8,23-30",
+      "unit": "token_auth (HTTPTokenAuth instance + verify_token + token_auth_error), exercised via DELETE /api/tokens and token-protected /api/users routes",
+      "covers": [
+        "dep:flask-httpauth"
+      ],
+      "kind": "dep"
+    },
+    {
+      "id": "U12",
+      "location": "config.py:1-25",
+      "unit": "Config class and module-level load_dotenv",
+      "covers": [
+        "dep:python-dotenv"
+      ],
+      "kind": "dep"
+    },
+    {
+      "id": "U13",
+      "location": "app/auth/routes.py:14-30",
+      "unit": "login view (representative Flask/Werkzeug/Jinja2 request -> form -> flash/redirect/render path)",
+      "covers": [
+        "dep:flask",
+        "dep:werkzeug",
+        "dep:jinja2"
+      ],
+      "kind": "dep"
+    },
+    {
+      "id": "U14",
+      "location": "app/api/errors.py",
+      "unit": "error_response and handle_exception (werkzeug.http.HTTP_STATUS_CODES, werkzeug.exceptions.HTTPException)",
+      "covers": [
+        "dep:werkzeug",
+        "dep:flask"
+      ],
+      "kind": "dep"
+    }
+  ],
+  "code_findings": [
+    {
+      "id": "C01",
+      "tool": "ruff",
+      "rule": "S605",
+      "location": "app/cli.py:18:8",
+      "unit": "init",
+      "unit_id": "U01",
+      "message": "Starting a process with a shell: seems safe, but may be changed in the future; consider rewriting without `shell`"
+    },
+    {
+      "id": "C02",
+      "tool": "ruff",
+      "rule": "S607",
+      "location": "app/cli.py:18:18",
+      "unit": "init",
+      "unit_id": "U01",
+      "message": "Starting a process with a partial executable path"
+    },
+    {
+      "id": "C03",
+      "tool": "ruff",
+      "rule": "S605",
+      "location": "app/cli.py:20:8",
+      "unit": "init",
+      "unit_id": "U01",
+      "message": "Starting a process with a shell, possible injection detected"
+    },
+    {
+      "id": "C04",
+      "tool": "ruff",
+      "rule": "S605",
+      "location": "app/cli.py:29:8",
+      "unit": "update",
+      "unit_id": "U02",
+      "message": "Starting a process with a shell: seems safe, but may be changed in the future; consider rewriting without `shell`"
+    },
+    {
+      "id": "C05",
+      "tool": "ruff",
+      "rule": "S607",
+      "location": "app/cli.py:29:18",
+      "unit": "update",
+      "unit_id": "U02",
+      "message": "Starting a process with a partial executable path"
+    },
+    {
+      "id": "C06",
+      "tool": "ruff",
+      "rule": "S605",
+      "location": "app/cli.py:31:8",
+      "unit": "update",
+      "unit_id": "U02",
+      "message": "Starting a process with a shell: seems safe, but may be changed in the future; consider rewriting without `shell`"
+    },
+    {
+      "id": "C07",
+      "tool": "ruff",
+      "rule": "S607",
+      "location": "app/cli.py:31:18",
+      "unit": "update",
+      "unit_id": "U02",
+      "message": "Starting a process with a partial executable path"
+    },
+    {
+      "id": "C08",
+      "tool": "ruff",
+      "rule": "S605",
+      "location": "app/cli.py:39:8",
+      "unit": "compile",
+      "unit_id": "U03",
+      "message": "Starting a process with a shell: seems safe, but may be changed in the future; consider rewriting without `shell`"
+    },
+    {
+      "id": "C09",
+      "tool": "ruff",
+      "rule": "S607",
+      "location": "app/cli.py:39:18",
+      "unit": "compile",
+      "unit_id": "U03",
+      "message": "Starting a process with a partial executable path"
+    },
+    {
+      "id": "C10",
+      "tool": "ruff",
+      "rule": "S324",
+      "location": "app/models.py:141:18",
+      "unit": "User.avatar",
+      "unit_id": "U04",
+      "message": "Probable use of insecure hash functions in `hashlib`: `md5`"
+    },
+    {
+      "id": "C11",
+      "tool": "ruff",
+      "rule": "S113",
+      "location": "app/translate.py:14:9",
+      "unit": "translate",
+      "unit_id": "U05",
+      "message": "Probable use of `requests` call without timeout"
+    }
+  ],
+  "dependency_findings": [
+    {
+      "id": "D01",
+      "tool": "pip-audit",
+      "package": "aiosmtpd",
+      "version": "1.4.4.post2",
+      "advisory": "PYSEC-2024-221",
+      "aliases": [
+        "CVE-2024-27305",
+        "GHSA-pr2m-px7j-xg65"
+      ],
+      "fix_versions": [
+        "1.4.5"
+      ],
+      "usage": "not imported",
+      "used_by": "Dev-only SMTP debug server; no app module imports it.",
+      "golden_units": []
+    },
+    {
+      "id": "D02",
+      "tool": "pip-audit",
+      "package": "aiosmtpd",
+      "version": "1.4.4.post2",
+      "advisory": "PYSEC-2026-1111",
+      "aliases": [
+        "CVE-2024-34083",
+        "GHSA-wgjv-9j3q-jhg8"
+      ],
+      "fix_versions": [
+        "1.4.6"
+      ],
+      "usage": "not imported",
+      "used_by": "Dev-only SMTP debug server; no app module imports it.",
+      "golden_units": []
+    },
+    {
+      "id": "D03",
+      "tool": "pip-audit",
+      "package": "certifi",
+      "version": "2023.11.17",
+      "advisory": "PYSEC-2024-230",
+      "aliases": [
+        "CVE-2024-39689",
+        "GHSA-248v-346w-9cwc"
+      ],
+      "fix_versions": [
+        "2024.7.4"
+      ],
+      "usage": "transitive",
+      "used_by": "CA bundle for requests/urllib3; reached via app/translate.py:translate (requests.post).",
+      "golden_units": [
+        "U05"
+      ]
+    },
+    {
+      "id": "D04",
+      "tool": "pip-audit",
+      "package": "certifi",
+      "version": "2023.11.17",
+      "advisory": "PYSEC-2026-4320",
+      "aliases": [
+        "GHSA-6q48-6c7w-9gw2"
+      ],
+      "fix_versions": [
+        "2026.10.18"
+      ],
+      "usage": "transitive",
+      "used_by": "CA bundle for requests/urllib3; reached via app/translate.py:translate (requests.post).",
+      "golden_units": [
+        "U05"
+      ]
+    },
+    {
+      "id": "D05",
+      "tool": "pip-audit",
+      "package": "dnspython",
+      "version": "2.4.2",
+      "advisory": "PYSEC-2026-1307",
+      "aliases": [
+        "CVE-2023-29483",
+        "GHSA-3rq5-2g8h-59hc"
+      ],
+      "fix_versions": [
+        "2.6.1"
+      ],
+      "usage": "transitive",
+      "used_by": "Dependency of email-validator; WTForms Email() validator in app/auth/forms.py (RegistrationForm, ResetPasswordRequestForm) and app/main/forms.py.",
+      "golden_units": []
+    },
+    {
+      "id": "D06",
+      "tool": "pip-audit",
+      "package": "dnspython",
+      "version": "2.4.2",
+      "advisory": "CVE-2026-114605",
+      "aliases": [
+        "GHSA-45c3-73f7-pv4m"
+      ],
+      "fix_versions": [
+        "2.9.0"
+      ],
+      "usage": "transitive",
+      "used_by": "Dependency of email-validator; WTForms Email() validator in app/auth/forms.py (RegistrationForm, ResetPasswordRequestForm) and app/main/forms.py.",
+      "golden_units": []
+    },
+    {
+      "id": "D07",
+      "tool": "pip-audit",
+      "package": "urllib3",
+      "version": "2.1.0",
+      "advisory": "PYSEC-2026-141",
+      "aliases": [
+        "CVE-2026-44431",
+        "GHSA-qccp-gfcp-xxvc"
+      ],
+      "fix_versions": [
+        "2.7.0"
+      ],
+      "usage": "transitive",
+      "used_by": "HTTP transport for requests (app/translate.py:translate) and elastic-transport (app/search.py via app/__init__.py Elasticsearch client).",
+      "golden_units": [
+        "U05"
+      ]
+    },
+    {
+      "id": "D08",
+      "tool": "pip-audit",
+      "package": "urllib3",
+      "version": "2.1.0",
+      "advisory": "PYSEC-2026-1999",
+      "aliases": [
+        "CVE-2025-50181",
+        "GHSA-pq67-6m6q-mj2v"
+      ],
+      "fix_versions": [
+        "2.5.0"
+      ],
+      "usage": "transitive",
+      "used_by": "HTTP transport for requests (app/translate.py:translate) and elastic-transport (app/search.py via app/__init__.py Elasticsearch client).",
+      "golden_units": [
+        "U05"
+      ]
+    },
+    {
+      "id": "D09",
+      "tool": "pip-audit",
+      "package": "urllib3",
+      "version": "2.1.0",
+      "advisory": "PYSEC-2026-1998",
+      "aliases": [
+        "CVE-2025-66418",
+        "GHSA-gm62-xv2j-4w53"
+      ],
+      "fix_versions": [
+        "2.6.0"
+      ],
+      "usage": "transitive",
+      "used_by": "HTTP transport for requests (app/translate.py:translate) and elastic-transport (app/search.py via app/__init__.py Elasticsearch client).",
+      "golden_units": [
+        "U05"
+      ]
+    },
+    {
+      "id": "D10",
+      "tool": "pip-audit",
+      "package": "urllib3",
+      "version": "2.1.0",
+      "advisory": "PYSEC-2026-1995",
+      "aliases": [
+        "CVE-2024-37891",
+        "GHSA-34jh-p97f-mpxf"
+      ],
+      "fix_versions": [
+        "1.26.19",
+        "2.2.2"
+      ],
+      "usage": "transitive",
+      "used_by": "HTTP transport for requests (app/translate.py:translate) and elastic-transport (app/search.py via app/__init__.py Elasticsearch client).",
+      "golden_units": [
+        "U05"
+      ]
+    },
+    {
+      "id": "D11",
+      "tool": "pip-audit",
+      "package": "urllib3",
+      "version": "2.1.0",
+      "advisory": "PYSEC-2026-1994",
+      "aliases": [
+        "CVE-2025-66471",
+        "GHSA-2xpw-w6gg-jr37"
+      ],
+      "fix_versions": [
+        "2.6.0"
+      ],
+      "usage": "transitive",
+      "used_by": "HTTP transport for requests (app/translate.py:translate) and elastic-transport (app/search.py via app/__init__.py Elasticsearch client).",
+      "golden_units": [
+        "U05"
+      ]
+    },
+    {
+      "id": "D12",
+      "tool": "pip-audit",
+      "package": "urllib3",
+      "version": "2.1.0",
+      "advisory": "PYSEC-2026-1996",
+      "aliases": [
+        "CVE-2026-21441",
+        "GHSA-38jv-5279-wg99"
+      ],
+      "fix_versions": [
+        "2.6.3"
+      ],
+      "usage": "transitive",
+      "used_by": "HTTP transport for requests (app/translate.py:translate) and elastic-transport (app/search.py via app/__init__.py Elasticsearch client).",
+      "golden_units": [
+        "U05"
+      ]
+    },
+    {
+      "id": "D13",
+      "tool": "pip-audit",
+      "package": "urllib3",
+      "version": "2.1.0",
+      "advisory": "PYSEC-2026-4177",
+      "aliases": [
+        "CVE-2026-97689",
+        "GHSA-vxq7-64xx-v4gw"
+      ],
+      "fix_versions": [
+        "2.8.0"
+      ],
+      "usage": "transitive",
+      "used_by": "HTTP transport for requests (app/translate.py:translate) and elastic-transport (app/search.py via app/__init__.py Elasticsearch client).",
+      "golden_units": [
+        "U05"
+      ]
+    },
+    {
+      "id": "D14",
+      "tool": "pip-audit",
+      "package": "urllib3",
+      "version": "2.1.0",
+      "advisory": "PYSEC-2026-4175",
+      "aliases": [
+        "CVE-2026-97687",
+        "GHSA-8988-9cw3-xx77"
+      ],
+      "fix_versions": [
+        "2.8.0"
+      ],
+      "usage": "transitive",
+      "used_by": "HTTP transport for requests (app/translate.py:translate) and elastic-transport (app/search.py via app/__init__.py Elasticsearch client).",
+      "golden_units": [
+        "U05"
+      ]
+    },
+    {
+      "id": "D15",
+      "tool": "pip-audit",
+      "package": "flask",
+      "version": "3.0.0",
+      "advisory": "PYSEC-2026-2151",
+      "aliases": [
+        "CVE-2026-27205",
+        "GHSA-68rp-wp8r-4726"
+      ],
+      "fix_versions": [
+        "3.1.3"
+      ],
+      "usage": "direct",
+      "used_by": "Framework for the whole app (app/__init__.py create_app, all blueprints/routes).",
+      "golden_units": [
+        "U13",
+        "U14"
+      ]
+    },
+    {
+      "id": "D16",
+      "tool": "pip-audit",
+      "package": "flask-httpauth",
+      "version": "4.8.0",
+      "advisory": "PYSEC-2026-2152",
+      "aliases": [
+        "CVE-2026-34531",
+        "GHSA-p44q-vqpr-4xmg"
+      ],
+      "fix_versions": [
+        "4.8.1"
+      ],
+      "usage": "direct",
+      "used_by": "app/api/auth.py: basic_auth (verify_password, basic_auth_error), token_auth (verify_token, token_auth_error); used by app/api/tokens.py and app/api/users.py.",
+      "golden_units": [
+        "U10",
+        "U11"
+      ]
+    },
+    {
+      "id": "D17",
+      "tool": "pip-audit",
+      "package": "gunicorn",
+      "version": "21.2.0",
+      "advisory": "PYSEC-2026-1434",
+      "aliases": [
+        "CVE-2024-1135",
+        "GHSA-w3h3-4rj7-4ph4"
+      ],
+      "fix_versions": [
+        "22.0.0"
+      ],
+      "usage": "not imported",
+      "used_by": "Production WSGI server launched from Procfile and boot.sh; no app module imports it.",
+      "golden_units": []
+    },
+    {
+      "id": "D18",
+      "tool": "pip-audit",
+      "package": "gunicorn",
+      "version": "21.2.0",
+      "advisory": "PYSEC-2026-1433",
+      "aliases": [
+        "CVE-2024-6827",
+        "GHSA-hc5x-x2vx-497g"
+      ],
+      "fix_versions": [
+        "22.0.0"
+      ],
+      "usage": "not imported",
+      "used_by": "Production WSGI server launched from Procfile and boot.sh; no app module imports it.",
+      "golden_units": []
+    },
+    {
+      "id": "D19",
+      "tool": "pip-audit",
+      "package": "httpie",
+      "version": "3.2.2",
+      "advisory": "PYSEC-2023-242",
+      "aliases": [
+        "CVE-2023-48052",
+        "GHSA-8r96-8889-qg2x"
+      ],
+      "fix_versions": [
+        "3.2.3"
+      ],
+      "usage": "not imported",
+      "used_by": "CLI HTTP client used manually to exercise the API; no app module imports it.",
+      "golden_units": []
+    },
+    {
+      "id": "D20",
+      "tool": "pip-audit",
+      "package": "idna",
+      "version": "3.4",
+      "advisory": "PYSEC-2024-60",
+      "aliases": [
+        "CVE-2024-3651",
+        "GHSA-jjg7-2v4v-x38h"
+      ],
+      "fix_versions": [
+        "3.7"
+      ],
+      "usage": "transitive",
+      "used_by": "Hostname encoding for requests/urllib3 (app/translate.py:translate) and email-validator.",
+      "golden_units": [
+        "U05"
+      ]
+    },
+    {
+      "id": "D21",
+      "tool": "pip-audit",
+      "package": "idna",
+      "version": "3.4",
+      "advisory": "PYSEC-2026-215",
+      "aliases": [
+        "CVE-2026-45409",
+        "GHSA-65pc-fj4g-8rjx"
+      ],
+      "fix_versions": [
+        "3.15"
+      ],
+      "usage": "transitive",
+      "used_by": "Hostname encoding for requests/urllib3 (app/translate.py:translate) and email-validator.",
+      "golden_units": [
+        "U05"
+      ]
+    },
+    {
+      "id": "D22",
+      "tool": "pip-audit",
+      "package": "jinja2",
+      "version": "3.1.2",
+      "advisory": "PYSEC-2026-1473",
+      "aliases": [
+        "CVE-2024-22195",
+        "GHSA-h5c8-rqwp-cp95"
+      ],
+      "fix_versions": [
+        "3.1.3"
+      ],
+      "usage": "direct (via Flask)",
+      "used_by": "Template engine for all render_template calls (app/templates/*, e.g. app/auth/routes.py:login).",
+      "golden_units": [
+        "U13"
+      ]
+    },
+    {
+      "id": "D23",
+      "tool": "pip-audit",
+      "package": "jinja2",
+      "version": "3.1.2",
+      "advisory": "PYSEC-2026-1471",
+      "aliases": [
+        "CVE-2025-27516",
+        "GHSA-cpwx-vrp4-4pq7"
+      ],
+      "fix_versions": [
+        "3.1.6"
+      ],
+      "usage": "direct (via Flask)",
+      "used_by": "Template engine for all render_template calls (app/templates/*, e.g. app/auth/routes.py:login).",
+      "golden_units": [
+        "U13"
+      ]
+    },
+    {
+      "id": "D24",
+      "tool": "pip-audit",
+      "package": "jinja2",
+      "version": "3.1.2",
+      "advisory": "PYSEC-2026-1474",
+      "aliases": [
+        "CVE-2024-34064",
+        "GHSA-h75v-3vvj-5mfj"
+      ],
+      "fix_versions": [
+        "3.1.4"
+      ],
+      "usage": "direct (via Flask)",
+      "used_by": "Template engine for all render_template calls (app/templates/*, e.g. app/auth/routes.py:login).",
+      "golden_units": [
+        "U13"
+      ]
+    },
+    {
+      "id": "D25",
+      "tool": "pip-audit",
+      "package": "jinja2",
+      "version": "3.1.2",
+      "advisory": "PYSEC-2026-1475",
+      "aliases": [
+        "CVE-2024-56326",
+        "GHSA-q2x7-8rv6-6q7h"
+      ],
+      "fix_versions": [
+        "3.1.5"
+      ],
+      "usage": "direct (via Flask)",
+      "used_by": "Template engine for all render_template calls (app/templates/*, e.g. app/auth/routes.py:login).",
+      "golden_units": [
+        "U13"
+      ]
+    },
+    {
+      "id": "D26",
+      "tool": "pip-audit",
+      "package": "jinja2",
+      "version": "3.1.2",
+      "advisory": "PYSEC-2026-1472",
+      "aliases": [
+        "CVE-2024-56201",
+        "GHSA-gmj6-6f8f-6699"
+      ],
+      "fix_versions": [
+        "3.1.5"
+      ],
+      "usage": "direct (via Flask)",
+      "used_by": "Template engine for all render_template calls (app/templates/*, e.g. app/auth/routes.py:login).",
+      "golden_units": [
+        "U13"
+      ]
+    },
+    {
+      "id": "D27",
+      "tool": "pip-audit",
+      "package": "mako",
+      "version": "1.3.0",
+      "advisory": "PYSEC-2026-2617",
+      "aliases": [
+        "CVE-2026-44307",
+        "GHSA-2h4p-vjrc-8xpq"
+      ],
+      "fix_versions": [
+        "1.3.12"
+      ],
+      "usage": "transitive",
+      "used_by": "Alembic migration script templates (flask db migrate); not used at app runtime.",
+      "golden_units": []
+    },
+    {
+      "id": "D28",
+      "tool": "pip-audit",
+      "package": "pygments",
+      "version": "2.17.1",
+      "advisory": "PYSEC-2026-2987",
+      "aliases": [
+        "CVE-2026-4539",
+        "GHSA-5239-wwwm-4pmq"
+      ],
+      "fix_versions": [
+        "2.20.0"
+      ],
+      "usage": "transitive",
+      "used_by": "Dependency of rich/httpie; no app module imports it.",
+      "golden_units": []
+    },
+    {
+      "id": "D29",
+      "tool": "pip-audit",
+      "package": "pyjwt",
+      "version": "2.8.0",
+      "advisory": "PYSEC-2026-120",
+      "aliases": [
+        "CVE-2026-32597",
+        "GHSA-752w-5fwx-jx9f"
+      ],
+      "fix_versions": [
+        "2.12.0"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py: User.get_reset_password_token (jwt.encode), User.verify_reset_password_token (jwt.decode).",
+      "golden_units": [
+        "U06",
+        "U07"
+      ]
+    },
+    {
+      "id": "D30",
+      "tool": "pip-audit",
+      "package": "pyjwt",
+      "version": "2.8.0",
+      "advisory": "PYSEC-2025-183",
+      "aliases": [
+        "CVE-2025-45768"
+      ],
+      "fix_versions": [],
+      "usage": "direct",
+      "used_by": "app/models.py: User.get_reset_password_token (jwt.encode), User.verify_reset_password_token (jwt.decode).",
+      "golden_units": [
+        "U06",
+        "U07"
+      ]
+    },
+    {
+      "id": "D31",
+      "tool": "pip-audit",
+      "package": "pyjwt",
+      "version": "2.8.0",
+      "advisory": "PYSEC-2026-175",
+      "aliases": [
+        "CVE-2026-48522",
+        "GHSA-993g-76c3-p5m4"
+      ],
+      "fix_versions": [
+        "2.13.0"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py: User.get_reset_password_token (jwt.encode), User.verify_reset_password_token (jwt.decode).",
+      "golden_units": [
+        "U06",
+        "U07"
+      ]
+    },
+    {
+      "id": "D32",
+      "tool": "pip-audit",
+      "package": "pyjwt",
+      "version": "2.8.0",
+      "advisory": "PYSEC-2026-177",
+      "aliases": [
+        "CVE-2026-48524",
+        "GHSA-fhv5-28vv-h8m8"
+      ],
+      "fix_versions": [
+        "2.13.0"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py: User.get_reset_password_token (jwt.encode), User.verify_reset_password_token (jwt.decode).",
+      "golden_units": [
+        "U06",
+        "U07"
+      ]
+    },
+    {
+      "id": "D33",
+      "tool": "pip-audit",
+      "package": "pyjwt",
+      "version": "2.8.0",
+      "advisory": "PYSEC-2026-179",
+      "aliases": [
+        "CVE-2026-48526",
+        "GHSA-xgmm-8j9v-c9wx"
+      ],
+      "fix_versions": [
+        "2.13.0"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py: User.get_reset_password_token (jwt.encode), User.verify_reset_password_token (jwt.decode).",
+      "golden_units": [
+        "U06",
+        "U07"
+      ]
+    },
+    {
+      "id": "D34",
+      "tool": "pip-audit",
+      "package": "pyjwt",
+      "version": "2.8.0",
+      "advisory": "PYSEC-2026-178",
+      "aliases": [
+        "CVE-2026-48525",
+        "GHSA-w7vc-732c-9m39"
+      ],
+      "fix_versions": [
+        "2.13.0"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py: User.get_reset_password_token (jwt.encode), User.verify_reset_password_token (jwt.decode).",
+      "golden_units": [
+        "U06",
+        "U07"
+      ]
+    },
+    {
+      "id": "D35",
+      "tool": "pip-audit",
+      "package": "pyjwt",
+      "version": "2.8.0",
+      "advisory": "PYSEC-2026-4145",
+      "aliases": [
+        "CVE-2026-102268",
+        "GHSA-ffc3-869f-jxw9"
+      ],
+      "fix_versions": [
+        "2.14.0"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py: User.get_reset_password_token (jwt.encode), User.verify_reset_password_token (jwt.decode).",
+      "golden_units": [
+        "U06",
+        "U07"
+      ]
+    },
+    {
+      "id": "D36",
+      "tool": "pip-audit",
+      "package": "pyjwt",
+      "version": "2.8.0",
+      "advisory": "PYSEC-2026-4149",
+      "aliases": [
+        "CVE-2026-102271",
+        "GHSA-p4g4-x82p-q773"
+      ],
+      "fix_versions": [
+        "2.14.0"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py: User.get_reset_password_token (jwt.encode), User.verify_reset_password_token (jwt.decode).",
+      "golden_units": [
+        "U06",
+        "U07"
+      ]
+    },
+    {
+      "id": "D37",
+      "tool": "pip-audit",
+      "package": "pyjwt",
+      "version": "2.8.0",
+      "advisory": "PYSEC-2026-4144",
+      "aliases": [
+        "CVE-2026-102267",
+        "GHSA-9v7f-9g4p-ffgj"
+      ],
+      "fix_versions": [
+        "2.14.0"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py: User.get_reset_password_token (jwt.encode), User.verify_reset_password_token (jwt.decode).",
+      "golden_units": [
+        "U06",
+        "U07"
+      ]
+    },
+    {
+      "id": "D38",
+      "tool": "pip-audit",
+      "package": "pyjwt",
+      "version": "2.8.0",
+      "advisory": "PYSEC-2026-4148",
+      "aliases": [
+        "CVE-2026-102270",
+        "GHSA-jwrc-g2q2-pq5p"
+      ],
+      "fix_versions": [
+        "2.14.0"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py: User.get_reset_password_token (jwt.encode), User.verify_reset_password_token (jwt.decode).",
+      "golden_units": [
+        "U06",
+        "U07"
+      ]
+    },
+    {
+      "id": "D39",
+      "tool": "pip-audit",
+      "package": "pyjwt",
+      "version": "2.8.0",
+      "advisory": "PYSEC-2026-4140",
+      "aliases": [
+        "CVE-2026-101917",
+        "GHSA-2gx3-rcp4-g85q"
+      ],
+      "fix_versions": [
+        "2.14.0"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py: User.get_reset_password_token (jwt.encode), User.verify_reset_password_token (jwt.decode).",
+      "golden_units": [
+        "U06",
+        "U07"
+      ]
+    },
+    {
+      "id": "D40",
+      "tool": "pip-audit",
+      "package": "pyjwt",
+      "version": "2.8.0",
+      "advisory": "PYSEC-2026-4141",
+      "aliases": [
+        "CVE-2026-101918",
+        "GHSA-42vr-xj54-vc7v"
+      ],
+      "fix_versions": [
+        "2.15.0"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py: User.get_reset_password_token (jwt.encode), User.verify_reset_password_token (jwt.decode).",
+      "golden_units": [
+        "U06",
+        "U07"
+      ]
+    },
+    {
+      "id": "D41",
+      "tool": "pip-audit",
+      "package": "pyjwt",
+      "version": "2.8.0",
+      "advisory": "PYSEC-2026-4147",
+      "aliases": [
+        "CVE-2026-102269",
+        "GHSA-hxm8-2xgr-2p9m"
+      ],
+      "fix_versions": [
+        "2.14.0"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py: User.get_reset_password_token (jwt.encode), User.verify_reset_password_token (jwt.decode).",
+      "golden_units": [
+        "U06",
+        "U07"
+      ]
+    },
+    {
+      "id": "D42",
+      "tool": "pip-audit",
+      "package": "pyjwt",
+      "version": "2.8.0",
+      "advisory": "PYSEC-2026-4183",
+      "aliases": [
+        "CVE-2026-102275",
+        "GHSA-x33g-cr3x-6449"
+      ],
+      "fix_versions": [
+        "2.15.0"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py: User.get_reset_password_token (jwt.encode), User.verify_reset_password_token (jwt.decode).",
+      "golden_units": [
+        "U06",
+        "U07"
+      ]
+    },
+    {
+      "id": "D43",
+      "tool": "pip-audit",
+      "package": "pyjwt",
+      "version": "2.8.0",
+      "advisory": "GHSA-pxh4-856f-4h89",
+      "aliases": [],
+      "fix_versions": [
+        "2.14.0"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py: User.get_reset_password_token (jwt.encode), User.verify_reset_password_token (jwt.decode).",
+      "golden_units": [
+        "U06",
+        "U07"
+      ]
+    },
+    {
+      "id": "D44",
+      "tool": "pip-audit",
+      "package": "python-dotenv",
+      "version": "1.0.0",
+      "advisory": "PYSEC-2026-2270",
+      "aliases": [
+        "CVE-2026-28684",
+        "GHSA-mf9w-mj56-hr94"
+      ],
+      "fix_versions": [
+        "1.2.2"
+      ],
+      "usage": "direct",
+      "used_by": "config.py module level: load_dotenv(os.path.join(basedir, \".env\")) feeding Config.",
+      "golden_units": [
+        "U12"
+      ]
+    },
+    {
+      "id": "D45",
+      "tool": "pip-audit",
+      "package": "requests",
+      "version": "2.31.0",
+      "advisory": "PYSEC-2026-1873",
+      "aliases": [
+        "CVE-2024-35195",
+        "GHSA-9wx4-h78v-vm56"
+      ],
+      "fix_versions": [
+        "2.32.0"
+      ],
+      "usage": "direct",
+      "used_by": "app/translate.py:translate (requests.post to MS Translator).",
+      "golden_units": [
+        "U05"
+      ]
+    },
+    {
+      "id": "D46",
+      "tool": "pip-audit",
+      "package": "requests",
+      "version": "2.31.0",
+      "advisory": "PYSEC-2026-1872",
+      "aliases": [
+        "CVE-2024-47081",
+        "GHSA-9hjg-9r4m-mvj7"
+      ],
+      "fix_versions": [
+        "2.32.4"
+      ],
+      "usage": "direct",
+      "used_by": "app/translate.py:translate (requests.post to MS Translator).",
+      "golden_units": [
+        "U05"
+      ]
+    },
+    {
+      "id": "D47",
+      "tool": "pip-audit",
+      "package": "requests",
+      "version": "2.31.0",
+      "advisory": "PYSEC-2026-2275",
+      "aliases": [
+        "CVE-2026-25645",
+        "GHSA-gc5v-m9x4-r6x2"
+      ],
+      "fix_versions": [
+        "2.33.0"
+      ],
+      "usage": "direct",
+      "used_by": "app/translate.py:translate (requests.post to MS Translator).",
+      "golden_units": [
+        "U05"
+      ]
+    },
+    {
+      "id": "D48",
+      "tool": "pip-audit",
+      "package": "setuptools",
+      "version": "68.2.2",
+      "advisory": "PYSEC-2025-49",
+      "aliases": [
+        "BIT-setuptools-2025-47273",
+        "CVE-2025-47273",
+        "GHSA-5rjg-fvgr-3xxf"
+      ],
+      "fix_versions": [
+        "78.1.1"
+      ],
+      "usage": "not imported",
+      "used_by": "Packaging/build tool; no app module imports it.",
+      "golden_units": []
+    },
+    {
+      "id": "D49",
+      "tool": "pip-audit",
+      "package": "setuptools",
+      "version": "68.2.2",
+      "advisory": "PYSEC-2026-1918",
+      "aliases": [
+        "BIT-setuptools-2024-6345",
+        "CVE-2024-6345",
+        "GHSA-cx63-2mw6-8hw5"
+      ],
+      "fix_versions": [
+        "70.0.0"
+      ],
+      "usage": "not imported",
+      "used_by": "Packaging/build tool; no app module imports it.",
+      "golden_units": []
+    },
+    {
+      "id": "D50",
+      "tool": "pip-audit",
+      "package": "setuptools",
+      "version": "68.2.2",
+      "advisory": "PYSEC-2026-3447",
+      "aliases": [
+        "BIT-setuptools-2026-59890",
+        "CVE-2026-59890",
+        "GHSA-h35f-9h28-mq5c"
+      ],
+      "fix_versions": [
+        "83.0.0"
+      ],
+      "usage": "not imported",
+      "used_by": "Packaging/build tool; no app module imports it.",
+      "golden_units": []
+    },
+    {
+      "id": "D51",
+      "tool": "pip-audit",
+      "package": "setuptools",
+      "version": "68.2.2",
+      "advisory": "GHSA-xmj3-9gf7-h52w",
+      "aliases": [],
+      "fix_versions": [
+        "84.1.0"
+      ],
+      "usage": "not imported",
+      "used_by": "Packaging/build tool; no app module imports it.",
+      "golden_units": []
+    },
+    {
+      "id": "D52",
+      "tool": "pip-audit",
+      "package": "werkzeug",
+      "version": "3.0.1",
+      "advisory": "PYSEC-2026-2045",
+      "aliases": [
+        "CVE-2024-49766",
+        "GHSA-f9vj-2wh5-fj8j"
+      ],
+      "fix_versions": [
+        "3.0.6"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py User.set_password/check_password (werkzeug.security); app/api/errors.py error_response/handle_exception (werkzeug.http, werkzeug.exceptions); Flask request/redirect handling (e.g. app/auth/routes.py:login).",
+      "golden_units": [
+        "U08",
+        "U09",
+        "U10",
+        "U13",
+        "U14"
+      ]
+    },
+    {
+      "id": "D53",
+      "tool": "pip-audit",
+      "package": "werkzeug",
+      "version": "3.0.1",
+      "advisory": "PYSEC-2026-2046",
+      "aliases": [
+        "CVE-2025-66221",
+        "GHSA-hgf8-39gv-g3f2"
+      ],
+      "fix_versions": [
+        "3.1.4"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py User.set_password/check_password (werkzeug.security); app/api/errors.py error_response/handle_exception (werkzeug.http, werkzeug.exceptions); Flask request/redirect handling (e.g. app/auth/routes.py:login).",
+      "golden_units": [
+        "U08",
+        "U09",
+        "U10",
+        "U13",
+        "U14"
+      ]
+    },
+    {
+      "id": "D54",
+      "tool": "pip-audit",
+      "package": "werkzeug",
+      "version": "3.0.1",
+      "advisory": "PYSEC-2026-2044",
+      "aliases": [
+        "CVE-2026-21860",
+        "GHSA-87hc-h4r5-73f7"
+      ],
+      "fix_versions": [
+        "3.1.5"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py User.set_password/check_password (werkzeug.security); app/api/errors.py error_response/handle_exception (werkzeug.http, werkzeug.exceptions); Flask request/redirect handling (e.g. app/auth/routes.py:login).",
+      "golden_units": [
+        "U08",
+        "U09",
+        "U10",
+        "U13",
+        "U14"
+      ]
+    },
+    {
+      "id": "D55",
+      "tool": "pip-audit",
+      "package": "werkzeug",
+      "version": "3.0.1",
+      "advisory": "PYSEC-2026-2043",
+      "aliases": [
+        "CVE-2024-34069",
+        "GHSA-2g68-c3qc-8985"
+      ],
+      "fix_versions": [
+        "3.0.3"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py User.set_password/check_password (werkzeug.security); app/api/errors.py error_response/handle_exception (werkzeug.http, werkzeug.exceptions); Flask request/redirect handling (e.g. app/auth/routes.py:login).",
+      "golden_units": [
+        "U08",
+        "U09",
+        "U10",
+        "U13",
+        "U14"
+      ]
+    },
+    {
+      "id": "D56",
+      "tool": "pip-audit",
+      "package": "werkzeug",
+      "version": "3.0.1",
+      "advisory": "PYSEC-2026-2320",
+      "aliases": [
+        "CVE-2026-27199",
+        "GHSA-29vq-49wr-vm6x"
+      ],
+      "fix_versions": [
+        "3.1.6"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py User.set_password/check_password (werkzeug.security); app/api/errors.py error_response/handle_exception (werkzeug.http, werkzeug.exceptions); Flask request/redirect handling (e.g. app/auth/routes.py:login).",
+      "golden_units": [
+        "U08",
+        "U09",
+        "U10",
+        "U13",
+        "U14"
+      ]
+    },
+    {
+      "id": "D57",
+      "tool": "pip-audit",
+      "package": "werkzeug",
+      "version": "3.0.1",
+      "advisory": "PYSEC-2026-3417",
+      "aliases": [
+        "CVE-2024-49767",
+        "GHSA-q34m-jh98-gwm2",
+        "PYSEC-2026-1860"
+      ],
+      "fix_versions": [
+        "3.0.6"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py User.set_password/check_password (werkzeug.security); app/api/errors.py error_response/handle_exception (werkzeug.http, werkzeug.exceptions); Flask request/redirect handling (e.g. app/auth/routes.py:login).",
+      "golden_units": [
+        "U08",
+        "U09",
+        "U10",
+        "U13",
+        "U14"
+      ]
+    },
+    {
+      "id": "D58",
+      "tool": "pip-audit",
+      "package": "werkzeug",
+      "version": "3.0.1",
+      "advisory": "PYSEC-2026-4312",
+      "aliases": [
+        "CVE-2026-102598",
+        "GHSA-g6x2-hccm-hh4m"
+      ],
+      "fix_versions": [
+        "3.1.9"
+      ],
+      "usage": "direct",
+      "used_by": "app/models.py User.set_password/check_password (werkzeug.security); app/api/errors.py error_response/handle_exception (werkzeug.http, werkzeug.exceptions); Flask request/redirect handling (e.g. app/auth/routes.py:login).",
+      "golden_units": [
+        "U08",
+        "U09",
+        "U10",
+        "U13",
+        "U14"
+      ]
+    }
+  ]
+}
