@@ -1,20 +1,20 @@
-aiosmtpd==1.4.4.post2
+aiosmtpd==1.4.4.post2  # pip-audit: PYSEC-2024-221, PYSEC-2026-1111 not exploitable - dev-only local SMTP debug server (Debugging handler, no relay, no STARTTLS); not imported or run by the app
 alembic==1.12.1
 atpublic==4.0
 attrs==23.1.0
 Babel==2.13.1
 blinker==1.7.0
-certifi==2023.11.17
+certifi==2026.10.19
 charset-normalizer==3.3.2
 click==8.1.7
 defusedxml==0.7.1
-dnspython==2.4.2
+dnspython==2.4.2  # pip-audit: PYSEC-2026-1307 not exploitable - no eventlet and no DNS resolution (WTForms Email() has check_deliverability=False, dns never imported); CVE-2026-114605 not exploitable - app never parses DNS wire messages
 elastic-transport==8.10.0
 elasticsearch==8.11.0
 email-validator==2.1.0.post1
-Flask==3.0.0
+Flask==3.0.0  # pip-audit: PYSEC-2026-2151 not exploitable - main before_app_request reads current_user (session.get) on every request, so Vary: Cookie is always set; fix (3.1.3) needs Werkzeug>=3.1, itsdangerous>=2.2, blinker>=1.9
 flask-babel==4.0.0
-Flask-HTTPAuth==4.8.0
+Flask-HTTPAuth==4.8.1
 Flask-Login==0.6.3
 Flask-Mail==0.9.1
 Flask-Migrate==4.0.5
@@ -24,31 +24,31 @@ Flask-WTF==1.2.1
 greenlet==3.0.1
 gunicorn==21.2.0
 httpie==3.2.2  # pip-audit: PYSEC-2023-242 not exploitable - dev-only CLI, never imported or run by the app; 3.2.3 only pins requests (no cert-validation change)
-idna==3.4
+idna==3.15
 itsdangerous==2.1.2
-Jinja2==3.1.2
+Jinja2==3.1.6
 langdetect==1.0.9
-Mako==1.3.0
+Mako==1.3.0  # pip-audit: PYSEC-2026-2617 not exploitable - Windows-only TemplateLookup traversal; only used by Alembic with fixed template paths, app runs on Linux
 markdown-it-py==3.0.0
 MarkupSafe==2.1.3
 mdurl==0.1.2
 multidict==6.0.4
 packaging==23.2
 psycopg2-binary==2.9.9
-Pygments==2.17.1
+Pygments==2.20.0
 PyJWT==2.8.0
 PySocks==1.7.1
-python-dotenv==1.0.0
+python-dotenv==1.0.0  # pip-audit: PYSEC-2026-2270 not exploitable - app only calls load_dotenv (read-only); vulnerable set_key/unset_key are never called
 pytz==2023.3.post1
 redis==5.0.1
-requests==2.31.0
+requests==2.33.0
 requests-toolbelt==1.0.0
 rich==13.7.0
 rq==1.15.1
-setuptools==68.2.2
+setuptools==68.2.2  # pip-audit: PYSEC-2025-49, PYSEC-2026-1918, PYSEC-2026-3447, GHSA-xmj3-9gf7-h52w not exploitable - build tool, not imported by the app; vulnerable paths (PackageIndex/easy_install URL downloads, sdist MANIFEST.in on macOS, Windows wheel-as-egg install) are never run here
 six==1.16.0
 SQLAlchemy==2.0.23
 typing_extensions==4.8.0
-urllib3==2.1.0
+urllib3==2.8.0
 Werkzeug==3.0.1
 WTForms==3.1.1
