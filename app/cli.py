@@ -36,5 +36,5 @@ def update():
 @translate.command()
 def compile():
     """Compile all languages."""
-    if os.system('pybabel compile -d app/translations'):
+    if os.system('pybabel compile -d app/translations'):  # noqa: S605 - constant command string, no user input reaches the shell
         raise RuntimeError('compile command failed')
