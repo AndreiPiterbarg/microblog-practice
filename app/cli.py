@@ -15,7 +15,7 @@ def translate():
 @click.argument('lang')
 def init(lang):
     """Initialize a new language."""
-    if os.system('pybabel extract -F babel.cfg -k _l -o messages.pot .'):  # noqa: S605 - constant command, no user input
+    if os.system('pybabel extract -F babel.cfg -k _l -o messages.pot .'):  # noqa: S605, S607 - constant command, no user input; dev-only CLI, pybabel is a console script from the user's own venv/PATH
         raise RuntimeError('extract command failed')
     if os.system(  # noqa: S605 - dev-only CLI; LANG is the invoking developer's own argv, no trust boundary
             'pybabel init -i messages.pot -d app/translations -l ' + lang):
