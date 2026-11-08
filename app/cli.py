@@ -28,7 +28,7 @@ def update():
     """Update all languages."""
     if os.system('pybabel extract -F babel.cfg -k _l -o messages.pot .'):  # noqa: S605 - constant command string, no user input reaches the shell
         raise RuntimeError('extract command failed')
-    if os.system('pybabel update -i messages.pot -d app/translations'):
+    if os.system('pybabel update -i messages.pot -d app/translations'):  # noqa: S605 - constant command string, no user input
         raise RuntimeError('update command failed')
     os.remove('messages.pot')
 
