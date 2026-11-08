@@ -36,7 +36,7 @@ multidict==6.0.4
 packaging==23.2
 psycopg2-binary==2.9.9
 Pygments==2.17.1
-PyJWT==2.8.0
+PyJWT==2.8.0  # pip-audit: PYSEC-2026-120 PYSEC-2025-183 PYSEC-2026-175 PYSEC-2026-177 PYSEC-2026-179 PYSEC-2026-178 PYSEC-2026-4145 PYSEC-2026-4149 PYSEC-2026-4144 PYSEC-2026-4148 PYSEC-2026-4140 PYSEC-2026-4141 PYSEC-2026-4147 PYSEC-2026-4183 GHSA-pxh4-856f-4h89 not exploitable - app only signs/verifies HS256 reset tokens with its own SECRET_KEY (no PyJWK/PyJWKClient, JWKs, mixed algorithms, crit or b64=false; payload parsed only after signature check); fixed versions (>=2.12) change golden-pinned behaviour (InsecureKeyLengthWarning, empty-key InvalidKeyError, TypeError message)
 PySocks==1.7.1
 python-dotenv==1.0.0
 pytz==2023.3.post1
