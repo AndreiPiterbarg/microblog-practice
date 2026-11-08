@@ -1,6 +1,6 @@
 # Security triage report: microblog-practice
 
-Branch: `devin/1794156777-security-triage`. All 39 PRs are merged: #1–#14 add golden tests, #15–#39 are triage.
+Branch: `devin/1794156777-security-triage`. All 40 PRs are merged: #1–#14 add golden tests, #15–#39 are triage, and #40 suppresses the commented false positives in pip-audit.
 
 ## Phase 4 verification
 | Check | Baseline | Now |
@@ -8,6 +8,7 @@ Branch: `devin/1794156777-security-triage`. All 39 PRs are merged: #1–#14 add 
 | `uvx ruff check --isolated --select S app config.py microblog.py` | 11 | **1** (S113 `app/translate.py:14`) |
 | `uvx --python 3.11 pip-audit -r requirements.txt`, raw count | 99 in 17 packages | **57 in 10 packages** |
 | pip-audit, unique advisories (aliases merged) | 58 | **36** |
+| `scripts/pip-audit.sh` (commented false positives suppressed) | — | **9 unique / 17 raw, 2 packages** (gunicorn, Werkzeug) |
 | `python -m unittest discover` | 4 (365 after golden tests) | **365 OK** |
 | `python tests.py` | OK | **OK** |
 
@@ -39,7 +40,7 @@ Application diff vs. the manifest commit: 3 files (`app/cli.py`, `app/models.py`
 | setuptools (4) | Build tool, not imported. Vulnerable paths (`PackageIndex`, sdist on macOS, Windows egg) never run. The fix (84.x) removes `pkg_resources`. | #37 |
 | PyJWT (15) | Only HS256 encode/decode with the app's own `SECRET_KEY`. No JWK/JWKS, mixed algorithms, `crit` or `b64=false`. PYSEC-2025-183 is disputed and has no fix. | #39 |
 
-pip-audit still counts these commented packages, because comments don't suppress it.
+`scripts/pip-audit.sh` (#40) reads these `# pip-audit: <IDs> not exploitable` comments and passes each ID to pip-audit as `--ignore-vuln`, so a finding is suppressed only when it is commented. Result: `Found 17 known vulnerabilities, ignored 40 in 2 packages`.
 
 ## Behaviour changes flagged by sub-sessions (not applied: accepted risk)
 
